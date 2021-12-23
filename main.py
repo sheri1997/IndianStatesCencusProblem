@@ -1,4 +1,6 @@
-﻿import pandas as pd
+﻿import csv
+
+import pandas as pd
 from IndianStatesCensusException import IndianStatesCensusException
 
 
@@ -23,11 +25,20 @@ class IndianStatesCensus:
         else:
             raise IndianStatesCensusException("Invalid File Name")
 
+    def delimitor(self, csv_data):
+        data = open(csv_data)
+        sniffer = csv.Sniffer()
+        sniff_data = sniffer.sniff(data.read())
+        if not sniff_data.delimiter == ',':
+            raise IndianStatesCensusException("Delimitor Not Matched")
+        else:
+            return sniff_data.delimiter
+
 
 if __name__ == '__main__':
     csv_data = IndianStatesCensus()
     file = 'D:/BrizePython/IndianStatesCencusProblem/IndianCensus - Sheet1.csv'
     print(csv_data.count_records(file))
     print(csv_data.csv_file_correct(file))
-
+    print(csv_data.delimitor(file))
 
