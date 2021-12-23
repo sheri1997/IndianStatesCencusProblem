@@ -1,17 +1,33 @@
 ﻿import pandas as pd
+from IndianStatesCensusException import IndianStatesCensusException
 
 
-def state_census_problem():
-    '''This Method Is Used To Load
-        The CSV File'''
-    csv_data = pd.read_csv('D:/BrizePython/IndianStatesCencusProblem/IndianCensus - Sheet1.csv')
-    print(csv_data)
+class IndianStatesCensus:
 
-def count_records():
-    '''This method is used to count
-        the number of records present in the csv file'''
-    csv_data = pd.read_csv('D:/BrizePython/IndianStatesCencusProblem/IndianCensus - Sheet1.csv')
-    print(csv_data.shape)
+    def state_census_problem(self, csv_data):
+        '''This Method Is Used To Load
+            The CSV File'''
+        data = pd.read_csv(csv_data)
+        print(data)
 
-data2 = count_records()
-print(data2)
+    def count_records(self, csv_data):
+        '''This method is used to count
+            the number of records present in the csv file'''
+        data = pd.read_csv(csv_data)
+        print(data.shape)
+
+    def csv_file_correct(self, csv_data):
+        data = open(csv_data, 'r')
+        if data.name.endswith(".csv"):
+            return data
+        else:
+            raise IndianStatesCensusException("Invalid File Name")
+
+
+if __name__ == '__main__':
+    csv_data = IndianStatesCensus()
+    file = 'D:/BrizePython/IndianStatesCencusProblem/IndianCensus - Sheet1.csv'
+    print(csv_data.count_records(file))
+    print(csv_data.csv_file_correct(file))
+
+
