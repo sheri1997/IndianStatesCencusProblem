@@ -6,6 +6,7 @@ from main import IndianStatesCensus
 class TestIndianStateCensusProblem:
     csv_file = 'D:/BrizePython/IndianStatesCencusProblem/IndianCensus - Sheet1.csv'
     txt_file = 'D:/BrizePython/IndianStatesCencusProblem/IndianCensus - Sheet1.txt'
+
     @pytest.fixture()
     def test_indian_states_census(self):
         data = IndianStatesCensus()
@@ -15,7 +16,7 @@ class TestIndianStateCensusProblem:
         expected = test_indian_states_census.count_records(self.csv_file)
         assert expected == 29
 
-    def test_match_extention(self,test_indian_states_census):
+    def test_match_extention(self, test_indian_states_census):
         actual = test_indian_states_census.csv_file_correct(self.csv_file)
         expected = '.csv'
         assert actual == expected
@@ -24,3 +25,13 @@ class TestIndianStateCensusProblem:
         with pytest.raises(IndianStatesCensusException) as exception:
             test_indian_states_census.csv_file_correct(self.txt_file)
         assert exception.value.message == "Invalid File Name"
+
+    def test_delimitor(self, test_indian_states_census):
+        expected = ','
+        accual = test_indian_states_census.delimitor(self.csv_file)
+        assert accual == expected
+
+    def test_not_delimitor(self, test_indian_states_census):
+        with pytest.raises(IndianStatesCensusException) as exception:
+            test_indian_states_census.delimitor(self.txt_file)
+        assert exception.value.message == "Delimitor Not Matched"
